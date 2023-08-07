@@ -1,0 +1,13 @@
+# Node.js
+node_modules/
+
+# Build files
+build/
+dist/
+*.exe
+*.msi
+
+# Environment variables
+.env
+.env.local
+.env.*.local
