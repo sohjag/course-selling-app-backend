@@ -81,10 +81,8 @@ mongoose.connect(mongoURL);
 app.get(
   "/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt",
   (req, res) => {
-    const filePath = path.join(
-      __dirname,
-      "home/ubuntu/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt"
-    );
+    const filePath =
+      "home/ubuntu/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt";
     res.sendFile(filePath);
   }
 );
