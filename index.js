@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+const https = require("https");
+const fs = require("fs");
 
 app.use(cors());
 app.use(express.json());
@@ -11,6 +13,13 @@ require("dotenv").config();
 
 const secret = process.env.SECRET_KEY;
 const mongoURL = process.env.MONGO_URL;
+
+const privateKey = fs.readFileSync("../private-key.pem", "utf8");
+const certificate = fs.readFileSync("../certificate.pem", "utf8");
+const credentials = { key: privateKey, cert: certificate };
+
+const httpsServer = https.createServer(credentials, app);
+const PORT = process.env.PORT || 443; // Use port 443 for HTTPS
 
 const jwtAuthentication = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -511,6 +520,11 @@ app.get("/users/courses/:courseId", jwtAuthentication, async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+// app.listen(3000, () => {
+//   console.log("Server is listening on port 3000");
+// });
+
+// Start HTTPS server on port 443
+httpsServer.listen(PORT, () => {
+  console.log(`HTTPS server running on port ${PORT}`);
 });
