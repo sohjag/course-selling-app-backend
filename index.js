@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const https = require("https");
-const fs = require("fs");
+// const https = require("https");
+// const fs = require("fs");
 
 app.use(cors());
 app.use(express.json());
@@ -14,12 +14,12 @@ require("dotenv").config();
 const secret = process.env.SECRET_KEY;
 const mongoURL = process.env.MONGO_URL;
 
-const privateKey = fs.readFileSync("../private-key.pem", "utf8");
-const certificate = fs.readFileSync("../certificate.pem", "utf8");
-const credentials = { key: privateKey, cert: certificate };
+// const privateKey = fs.readFileSync("../private-key.pem", "utf8");
+// const certificate = fs.readFileSync("../certificate.pem", "utf8");
+// const credentials = { key: privateKey, cert: certificate };
 
-const httpsServer = https.createServer(credentials, app);
-const PORT = process.env.PORT || 3000;
+// const httpsServer = https.createServer(credentials, app);
+// const PORT = process.env.PORT || 3000;
 
 const jwtAuthentication = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -75,6 +75,18 @@ const Courses = mongoose.model("Courses", courseSchema);
 const Lessons = mongoose.model("Lessons", lessonSchema);
 
 mongoose.connect(mongoURL);
+
+//ssl certificate
+app.get(
+  "/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt",
+  (req, res) => {
+    const filePath = path.join(
+      __dirname,
+      "home/ubuntu/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt"
+    );
+    res.sendFile(filePath);
+  }
+);
 
 // Admin routes
 app.post("/admin/signup", async (req, res) => {
@@ -520,11 +532,11 @@ app.get("/users/courses/:courseId", jwtAuthentication, async (req, res) => {
   }
 });
 
-// app.listen(3000, () => {
-//   console.log("Server is listening on port 3000");
-// });
+app.listen(3000, () => {
+  console.log("Server is listening on port 3000");
+});
 
 // Start HTTPS server on port 443
-httpsServer.listen(PORT, () => {
-  console.log(`HTTPS server running on port ${PORT}`);
-});
+// httpsServer.listen(PORT, () => {
+//   console.log(`HTTPS server running on port ${PORT}`);
+// });
