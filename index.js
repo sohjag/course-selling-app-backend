@@ -77,6 +77,12 @@ const Lessons = mongoose.model("Lessons", lessonSchema);
 
 mongoose.connect(mongoURL);
 
+// Serve static files from the root domain
+app.use(
+  "/.well-known/pki-validation",
+  express.static("/home/ubuntu/.well-known/pki-validation")
+);
+
 //ssl certificate
 app.get(
   "/.well-known/pki-validation/44AC8EC013FFB86144FD20FFE7CA908A.txt",
