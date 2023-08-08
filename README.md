@@ -26,3 +26,15 @@ This is a full stack course selling web application built using MERN stack. The 
 - Typecripting everything.
 - Recoil.
 - And of course, better file management and organization.
+
+## Try it out!
+
+Main web-app deployed at https://course-selling-app-frontend.vercel.app/ .To navigate to admin login/signup, go to ${website-address}/adminlogin or ${website-address}/adminsignup
+
+- Admin account:
+  username: test@email.com
+  password: 1234
+
+- User account:
+  username: user@email.com
+  password: 1234
