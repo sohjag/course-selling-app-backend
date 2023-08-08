@@ -19,7 +19,7 @@ const certificate = fs.readFileSync("../certificate.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 const httpsServer = https.createServer(credentials, app);
-const PORT = process.env.PORT || 443; // Use port 443 for HTTPS
+const PORT = process.env.PORT || 3000;
 
 const jwtAuthentication = (req, res, next) => {
   const authHeader = req.headers.authorization;
